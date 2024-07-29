@@ -15,4 +15,9 @@
     2. create products array
     3. add product images
     4. render products
-    
+6. Add Bootstarp
+7. Add Page Routing
+    1. npm i react-router-dom
+    2. Create route for home page
+    3. Create router for product page
+    4. Add helmet for setting page title
