@@ -11,17 +11,21 @@ function App() {
       <header>
         <Navbar bg='dark' variant='dark' expand="ig">
           <Container>
-            <Navbar.Brand>TS Amazon</Navbar.Brand>
+            <Navbar.Brand>amazon</Navbar.Brand>
           </Container>
-          <Nav>
-            <a href='/cart' className='nav-link'>Cart</a>
-            <a href='/signin' className='nav-link'>Sign In</a>
+          <Nav className='d-flex flex-row'>
+            <a href='/cart' className='nav-link mx-2'>
+              Cart
+            </a>
+            <a href='/signin' className='nav-link mx-2'>
+              Sign In
+            </a>
           </Nav>
         </Navbar>
       </header>
       <main>
         <Container className='mt-3'>
-            <Outlet></Outlet>
+          <Outlet></Outlet>
         </Container>
 
       </main>

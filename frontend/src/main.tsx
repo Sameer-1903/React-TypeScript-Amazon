@@ -11,12 +11,15 @@ import {
 } from "react-router-dom";
 import HomePage from './pages/HomePage.tsx'
 import ProductPage from './pages/ProductPage.tsx'
+import axios from 'axios'
+
+axios.defaults.baseURL = process.env.NODE_ENV === 'development' ? 'http://localhost:4000' : '/'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<App />}>
-      <Route index={true} element={<HomePage/>}></Route>
-      <Route path='product/:slug' element={<ProductPage/>}></Route>
+      <Route index={true} element={<HomePage />}></Route>
+      <Route path='product/:slug' element={<ProductPage />}></Route>
 
       {/* <Route path="dashboard" element={<Dashboard />} /> */}
       {/* ... etc. */}
@@ -27,6 +30,6 @@ const router = createBrowserRouter(
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-   <RouterProvider router={router} />
+    <RouterProvider router={router} />
   </React.StrictMode>
 )
