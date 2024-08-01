@@ -2,244 +2,379 @@
 
 ## Lessons
 
-1. Introduction
-2. Install Tools
-3. Create TypeScript React App By Vite
-4. Create Git Repository
+1.  Introduction
+2.  Install Tools
+3.  Create TypeScript React App By Vite
+4.  Create Git Repository
     1. add README.md
     2. create github account
-    3. connect vs code to github 
-    4. publish repository 
-5. List Products
+    3. connect vs code to github
+    4. publish repository
+5.  List Products
     1. create Product type
     2. create products array
     3. add product images
     4. render products
-6. Add Bootstarp
-7. Add Page Routing
+6.  Add Bootstarp
+7.  Add Page Routing
     1. npm i react-router-dom
     2. Create route for home page
     3. Create router for product page
     4. Add helmet for setting page title
-8. Create Node Server
-    1. create backend folder
-       cd backend
-       npm init
-    2. config typescript
-       npm install --save-dev typescript ts-node-dev
-       create tsconfig.json
+8.  Create Node Server
 
-            ```json
+    1.  create backend folder
+        cd backend
+        npm init
+    2.  config typescript
+        npm install --save-dev typescript ts-node-dev
+        create tsconfig.json
+
+             ```json
+
         {
-            "compilerOptions": {
-            "target": "es2015",
-            "outDir": "./build",
-            "strict": true,
-            "module": "commonjs",
-            "esModuleInterop": true
-            }
+        "compilerOptions": {
+        "target": "es2015",
+        "outDir": "./build",
+        "strict": true,
+        "module": "commonjs",
+        "esModuleInterop": true
         }
+        }
+
         ```
 
         add dev and build command to package.json
         `"dev": "ts-node-dev --respawn --transpile-only --files src/index.ts",`
 
-    3. config eslint
-       npm install --save-dev eslint @typescript-eslint/parser @typescript-eslint/eslint-plugin
-       create .eslintrc.js
+        ```
+
+    3.  config eslint
+        npm install --save-dev eslint @typescript-eslint/parser @typescript-eslint/eslint-plugin
+        create .eslintrc.js
 
         ```js
         module.exports = {
-            env: {
+          env: {
             es2016: true,
             node: true,
-            },
-            extends: ['eslint:recommended', 'plugin:@typescript-eslint/recommended'],
-            parser: '@typescript-eslint/parser',
-            parserOptions: {
+          },
+          extends: [
+            'eslint:recommended',
+            'plugin:@typescript-eslint/recommended',
+          ],
+          parser: '@typescript-eslint/parser',
+          parserOptions: {
             ecmaVersion: 'es2016',
             sourceType: 'module',
-            },
-            plugins: ['@typescript-eslint'],
+          },
+          plugins: ['@typescript-eslint'],
         }
         ```
-    4. create express server
-       npm install express
-       npm install --save-sev @types/express
 
-    5. create src/index.ts
-       copy data.ts and Product.ts from frontend to backend
+    4.  create express server
+        npm install express
+        npm install --save-sev @types/express
 
-            ```js
-            import express, { Request, Response } from 'express'
-            import { sampleProducts } from './data'
-            const app = express()
-            app.get('/api/products', (req: Request, res: Response) => {
-                res.json(sampleProducts)
-            })
-            const PORT = 4000
-            app.listen(PORT, () => {
-                console.log(`server started at http://localhost:${PORT}`)
-            })
+    5.  create src/index.ts
+        copy data.ts and Product.ts from frontend to backend
+
+             ```js
+             import express, { Request, Response } from 'express'
+             import { sampleProducts } from './data'
+             const app = express()
+             app.get('/api/products', (req: Request, res: Response) => {
+                 res.json(sampleProducts)
+             })
+             const PORT = 4000
+             app.listen(PORT, () => {
+                 console.log(`server started at http://localhost:${PORT}`)
+             })
+
         ```
 
-    6. npm start
+        ```
 
-9. Fetch Products
+    6.  npm start
+
+9.  Fetch Products
 
     1. install axios
        npm install axios
        in main.tsx
 
-        ```js
-        axios.defaults.baseURL =
-            process.env.NODE_ENV === 'development' ? 'http://localhost:4000' : '/'
-        ```
+       ```js
+       axios.defaults.baseURL =
+         process.env.NODE_ENV === 'development' ? 'http://localhost:4000' : '/'
+       ```
 
     2. define types in HomePage
 
-        ```js
-        type State = {
-            products: Product[],
-            loading: boolean
-            error: string
-        }
-        type Action =
-            | { type: 'FETCH_REQUEST' }
-            | {
-                type: 'FETCH_SUCCESS'
-                payload: Product[]
-            }
-            | { type: 'FETCH_FAIL'; payload: string }
+       ```js
+       type State = {
+           products: Product[],
+           loading: boolean
+           error: string
+       }
+       type Action =
+           | { type: 'FETCH_REQUEST' }
+           | {
+               type: 'FETCH_SUCCESS'
+               payload: Product[]
+           }
+           | { type: 'FETCH_FAIL'; payload: string }
 
-        ```
+       ```
 
     3. define initial state and reducer in HomePage.tsx
 
-        ```js
-        const initialState: State = {
-            products: [],
-            loading: true,
-            error: '',
-        }
-        const reducer = (state: State, action: Action) => {
-            switch (action.type) {
-            case 'FETCH_REQUEST':
-                return { ...state, loading: true }
-            case 'FETCH_SUCCESS':
-                return { ...state, products: action.payload, loading: false }
-            case 'FETCH_FAIL':
-                return { ...state, loading: false, error: action.payload }
-            default:
-                return state
-            }
-        }
-        ```
+       ```js
+       const initialState: State = {
+         products: [],
+         loading: true,
+         error: '',
+       }
+       const reducer = (state: State, action: Action) => {
+         switch (action.type) {
+           case 'FETCH_REQUEST':
+             return { ...state, loading: true }
+           case 'FETCH_SUCCESS':
+             return { ...state, products: action.payload, loading: false }
+           case 'FETCH_FAIL':
+             return { ...state, loading: false, error: action.payload }
+           default:
+             return state
+         }
+       }
+       ```
 
     4. define get error function
        create types/ApiError.ts
 
-        ```js
-            export declare type ApiError = {
-            message: string
-            response: {
-            data: {
-            message: string
-            }
-            }
-            }
-        ```
+       ```js
+           export declare type ApiError = {
+           message: string
+           response: {
+           data: {
+           message: string
+           }
+           }
+           }
+       ```
 
-        create utils.ts
+       create utils.ts
 
-        ```js
-        export const getError = (error: ApiError) => {
-            return error.response && error.response.data.message
-            ? error.response.data.message
-            : error.message
-        }
-        ```
+       ```js
+       export const getError = (error: ApiError) => {
+         return error.response && error.response.data.message
+           ? error.response.data.message
+           : error.message
+       }
+       ```
 
     5. fetch products
 
-        ```js
-        const [{ loading, error, products }, dispatch] = useReducer<
-            React.Reducer<State, Action>
-        >(reducer, initialState)
-            useEffect(() => {
-            const fetchData = async () => {
-            dispatch({ type: 'FETCH_REQUEST' })
-            try {
-                const result = await axios.get('/api/products')
-                dispatch({ type: 'FETCH_SUCCESS', payload: result.data })
-            } catch (err) {
-                dispatch({ type: 'FETCH_FAIL', payload: getError(err as ApiError) })
-            }
-            }
-            fetchData()
-        }, [])
-        ```
+       ```js
+       const [{ loading, error, products }, dispatch] = useReducer<
+           React.Reducer<State, Action>
+       >(reducer, initialState)
+           useEffect(() => {
+           const fetchData = async () => {
+           dispatch({ type: 'FETCH_REQUEST' })
+           try {
+               const result = await axios.get('/api/products')
+               dispatch({ type: 'FETCH_SUCCESS', payload: result.data })
+           } catch (err) {
+               dispatch({ type: 'FETCH_FAIL', payload: getError(err as ApiError) })
+           }
+           }
+           fetchData()
+       }, [])
+       ```
 
     6. create LoadingBox component
        create /components/LoadingBox.tsx
 
-        ```js
-        export declare type ApiError = {
-            message: string
-            response: {
-            data: {
-            message: string
-            }
-            }
-        }
-        ```
+       ```js
+       export declare type ApiError = {
+           message: string
+           response: {
+           data: {
+           message: string
+           }
+           }
+       }
+       ```
 
     7. create MessageBox component
        create /components/MessageBox.tsx
 
-        ```js
-        import Alert from 'react-bootstrap/Alert'
-        import React from 'react'
-        export default function MessageBox({
-        variant = 'info',
-        children,
-        }: {
-            variant?: string
-            children: React.ReactNode
-        }) {
-            return <Alert variant={variant || 'info'}>{children}</Alert>
-        }
-        ```
+       ```js
+       import Alert from 'react-bootstrap/Alert'
+       import React from 'react'
+       export default function MessageBox({
+       variant = 'info',
+       children,
+       }: {
+           variant?: string
+           children: React.ReactNode
+       }) {
+           return <Alert variant={variant || 'info'}>{children}</Alert>
+       }
+       ```
 
     8. update return statement
        replace sampleProducts with products
 
-        ```js
-        return loading ? (
-            <LoadingBox />
-        ) : error ? (
-            <MessageBox variant="danger">{error}</MessageBox>
-        ) : (
-            <Row>
-            {products.map((product) => (
-                <Col key={product.slug} sm={6} md={4} lg={3}>
-                <Link to={'/product/' + product.slug}>
-                    <img
-                    src={product.image}
-                    alt={product.name}
-                    className="product-image"
-                    />
-                    <h2>{product.name}</h2>
-                    <p>${product.price}</p>
-                </Link>
-                </Col>
-            ))}
-            </Row>
-        )
-        ```
+       ```js
+       return loading ? (
+         <LoadingBox />
+       ) : error ? (
+         <MessageBox variant="danger">{error}</MessageBox>
+       ) : (
+         <Row>
+           {products.map((product) => (
+             <Col key={product.slug} sm={6} md={4} lg={3}>
+               <Link to={'/product/' + product.slug}>
+                 <img
+                   src={product.image}
+                   alt={product.name}
+                   className="product-image"
+                 />
+                 <h2>{product.name}</h2>
+                 <p>${product.price}</p>
+               </Link>
+             </Col>
+           ))}
+         </Row>
+       )
+       ```
 
     9. Fetch Products From Backend
-        1. npm install axios
-        2. set axios base url
-        3. use effect hook
-        4. use reducer hook
+       1. npm install axios
+       2. set axios base url
+       3. use effect hook
+       4. use reducer hook
+
+10. Create-Rating-Product-Component
+
+    1. Rating.js
+
+        ```js
+            function Rating(props: {
+            ating: number
+            numReviews?: number
+            caption?: string
+            }) r{
+            const { rating, numReviews, caption } = props
+            return (
+                <div className="rating">
+                <span>
+                    <i
+                    className={
+                        rating >= 1
+                        ? 'fas fa-star'
+                        : rating >= 0.5
+                        ? 'fas fa-star-half-alt'
+                        : 'far fa-star'
+                    }
+                    />
+                </span>
+                <span>
+                    <i
+                    className={
+                        rating >= 2
+                        ? 'fas fa-star'
+                        : rating >= 1.5
+                        ? 'fas fa-star-half-alt'
+                        : 'far fa-star'
+                    }
+                    />
+                </span>
+                <span>
+                    <i
+                    className={
+                        rating >= 3
+                        ? 'fas fa-star'
+                        : rating >= 2.5
+                        ? 'fas fa-star-half-alt'
+                        : 'far fa-star'
+                    }
+                    />
+                </span>
+                <span>
+                    <i
+                    className={
+                        rating >= 4
+                        ? 'fas fa-star'
+                        : rating >= 3.5
+                        ? 'fas fa-star-half-alt'
+                        : 'far fa-star'
+                    }
+                    />
+                </span>
+                <span>
+                    <i
+                    className={
+                        rating >= 5
+                        ? 'fas fa-star'
+                        : rating >= 4.5
+                        ? 'fas fa-star-half-alt'
+                        : 'far fa-star'
+                    }
+                    />
+                </span>
+                {caption ? (
+                    <span>{caption}</span>
+                ) : numReviews != 0 ? (
+                    <span>{' ' + numReviews + ' reviews'}</span>
+                ) : (
+                    ''
+                )}
+                </div>
+            )
+            }
+            export default Rating
+
+        ```
+
+    2. ProductItem.js
+
+        ```js
+        function ProductItem({ product }: { product: Product }) {
+            return (
+            <Card>
+                <Link to={`/product/${product.slug}`}>
+                <img
+                    src={product.image}
+                    className="card-img-top"
+                    alt={product.name}
+                />
+                </Link>
+                <Card.Body>
+                <Link to={`/product/${product.slug}`}>
+                    <Card.Title>{product.name}</Card.Title>
+                </Link>
+                <Rating rating={product.rating} numReviews={product.numReviews} />
+                <Card.Text>${product.price}</Card.Text>
+                {product.countInStock === 0 ? (
+                    <Button variant="light" disabled>
+                    Out of stock
+                    </Button>
+                ) : (
+                    <Button>Add to cart</Button>
+                )}
+                </Card.Body>
+            </Card>
+            )
+        }
+        export default ProductItem
+        ```
+
+    3. HomePage.js
+
+        ```js
+        <Col key={product.slug} sm={6} md={4} lg={3} className="mb-3">
+            <ProductItem product={product}></ProductItem>
+        </Col>
+        ```
