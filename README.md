@@ -260,214 +260,335 @@
 
     1. Rating.js
 
-        ```js
-            function Rating(props: {
-            ating: number
-            numReviews?: number
-            caption?: string
-            }) r{
-            const { rating, numReviews, caption } = props
-            return (
-                <div className="rating">
-                <span>
-                    <i
-                    className={
-                        rating >= 1
-                        ? 'fas fa-star'
-                        : rating >= 0.5
-                        ? 'fas fa-star-half-alt'
-                        : 'far fa-star'
-                    }
-                    />
-                </span>
-                <span>
-                    <i
-                    className={
-                        rating >= 2
-                        ? 'fas fa-star'
-                        : rating >= 1.5
-                        ? 'fas fa-star-half-alt'
-                        : 'far fa-star'
-                    }
-                    />
-                </span>
-                <span>
-                    <i
-                    className={
-                        rating >= 3
-                        ? 'fas fa-star'
-                        : rating >= 2.5
-                        ? 'fas fa-star-half-alt'
-                        : 'far fa-star'
-                    }
-                    />
-                </span>
-                <span>
-                    <i
-                    className={
-                        rating >= 4
-                        ? 'fas fa-star'
-                        : rating >= 3.5
-                        ? 'fas fa-star-half-alt'
-                        : 'far fa-star'
-                    }
-                    />
-                </span>
-                <span>
-                    <i
-                    className={
-                        rating >= 5
-                        ? 'fas fa-star'
-                        : rating >= 4.5
-                        ? 'fas fa-star-half-alt'
-                        : 'far fa-star'
-                    }
-                    />
-                </span>
-                {caption ? (
-                    <span>{caption}</span>
-                ) : numReviews != 0 ? (
-                    <span>{' ' + numReviews + ' reviews'}</span>
-                ) : (
-                    ''
-                )}
-                </div>
-            )
-            }
-            export default Rating
+       ```js
+           function Rating(props: {
+           ating: number
+           numReviews?: number
+           caption?: string
+           }) r{
+           const { rating, numReviews, caption } = props
+           return (
+               <div className="rating">
+               <span>
+                   <i
+                   className={
+                       rating >= 1
+                       ? 'fas fa-star'
+                       : rating >= 0.5
+                       ? 'fas fa-star-half-alt'
+                       : 'far fa-star'
+                   }
+                   />
+               </span>
+               <span>
+                   <i
+                   className={
+                       rating >= 2
+                       ? 'fas fa-star'
+                       : rating >= 1.5
+                       ? 'fas fa-star-half-alt'
+                       : 'far fa-star'
+                   }
+                   />
+               </span>
+               <span>
+                   <i
+                   className={
+                       rating >= 3
+                       ? 'fas fa-star'
+                       : rating >= 2.5
+                       ? 'fas fa-star-half-alt'
+                       : 'far fa-star'
+                   }
+                   />
+               </span>
+               <span>
+                   <i
+                   className={
+                       rating >= 4
+                       ? 'fas fa-star'
+                       : rating >= 3.5
+                       ? 'fas fa-star-half-alt'
+                       : 'far fa-star'
+                   }
+                   />
+               </span>
+               <span>
+                   <i
+                   className={
+                       rating >= 5
+                       ? 'fas fa-star'
+                       : rating >= 4.5
+                       ? 'fas fa-star-half-alt'
+                       : 'far fa-star'
+                   }
+                   />
+               </span>
+               {caption ? (
+                   <span>{caption}</span>
+               ) : numReviews != 0 ? (
+                   <span>{' ' + numReviews + ' reviews'}</span>
+               ) : (
+                   ''
+               )}
+               </div>
+           )
+           }
+           export default Rating
 
-        ```
+       ```
 
     2. ProductItem.js
 
-        ```js
-        function ProductItem({ product }: { product: Product }) {
-            return (
-            <Card>
-                <Link to={`/product/${product.slug}`}>
-                <img
-                    src={product.image}
-                    className="card-img-top"
-                    alt={product.name}
-                />
-                </Link>
-                <Card.Body>
-                <Link to={`/product/${product.slug}`}>
-                    <Card.Title>{product.name}</Card.Title>
-                </Link>
-                <Rating rating={product.rating} numReviews={product.numReviews} />
-                <Card.Text>${product.price}</Card.Text>
-                {product.countInStock === 0 ? (
-                    <Button variant="light" disabled>
-                    Out of stock
-                    </Button>
-                ) : (
-                    <Button>Add to cart</Button>
-                )}
-                </Card.Body>
-            </Card>
-            )
-        }
-        export default ProductItem
-        ```
+       ```js
+       function ProductItem({ product }: { product: Product }) {
+         return (
+           <Card>
+             <Link to={`/product/${product.slug}`}>
+               <img
+                 src={product.image}
+                 className="card-img-top"
+                 alt={product.name}
+               />
+             </Link>
+             <Card.Body>
+               <Link to={`/product/${product.slug}`}>
+                 <Card.Title>{product.name}</Card.Title>
+               </Link>
+               <Rating
+                 rating={product.rating}
+                 numReviews={product.numReviews}
+               />
+               <Card.Text>${product.price}</Card.Text>
+               {product.countInStock === 0 ? (
+                 <Button variant="light" disabled>
+                   Out of stock
+                 </Button>
+               ) : (
+                 <Button>Add to cart</Button>
+               )}
+             </Card.Body>
+           </Card>
+         )
+       }
+       export default ProductItem
+       ```
 
     3. HomePage.js
 
-        ```js
-        <Col key={product.slug} sm={6} md={4} lg={3} className="mb-3">
-            <ProductItem product={product}></ProductItem>
-        </Col>
-        ```
-11. 
-    1. npm i react-helmet-async
+       ```js
+       <Col key={product.slug} sm={6} md={4} lg={3} className="mb-3">
+         <ProductItem product={product}></ProductItem>
+       </Col>
+       ```
+
+11. 1. npm i react-helmet-async
     2. main.tsx
 
-        ```js
-        import { HelmetProvider } from 'react-helmet-async'
+       ```js
+       import { HelmetProvider } from 'react-helmet-async'
 
-        ...
-        <HelmetProvider>
-            <RouterProvider router={router} />
-        </HelmetProvider>
-        ```
+       ...
+       <HelmetProvider>
+           <RouterProvider router={router} />
+       </HelmetProvider>
+       ```
 
     3. HomePage.tsx
 
-        ```js
-        import { Helmet } from 'react-helmet-async'
-        ...
-        <Helmet>
-                <title>Amazona</title>
-        </Helmet>
-
+       ```js
+       import { Helmet } from 'react-helmet-async'
+       ...
+       <Helmet>
+               <title>Amazona</title>
+       </Helmet>
+       ```
 
 12. Load-Products-By-React-Query
 
     1. npm i @tanstack/react-query @tanstack/react-query-devtools
     2. main.tsx
 
-        ```js
-        // remove lines
-        import axios from 'axios'
-        axios.defaults.baseURL =
-            process.env.NODE_ENV === 'development' ? 'http://localhost:4000' : '/'
+       ```js
+       // remove lines
+       import axios from 'axios'
+       axios.defaults.baseURL =
+           process.env.NODE_ENV === 'development' ? 'http://localhost:4000' : '/'
 
-            ...
-            <QueryClientProvider client={queryClient}>
-                <RouterProvider router={router} />
-                <ReactQueryDevtools initialIsOpen={false} />
-            </QueryClientProvider>
+           ...
+           <QueryClientProvider client={queryClient}>
+               <RouterProvider router={router} />
+               <ReactQueryDevtools initialIsOpen={false} />
+           </QueryClientProvider>
 
-        ```
+       ```
 
     3. apiClient.ts
 
-        ```js
-        import axios from 'axios'
-        const apiClient = axios.create({
-            baseURL:
-            process.env.NODE_ENV === 'development' ? 'http://localhost:5001' : '/',
-            headers: {
-            'Content-type': 'application/json',
-            },
-        })
+       ```js
+       import axios from 'axios'
+       const apiClient = axios.create({
+         baseURL:
+           process.env.NODE_ENV === 'development'
+             ? 'http://localhost:5001'
+             : '/',
+         headers: {
+           'Content-type': 'application/json',
+         },
+       })
 
-        export default apiClient
-        ```
+       export default apiClient
+       ```
 
     4. hooks/productHook.ts
 
-        ```js
-        export const useGetProductsQuery = () =>
-        useQuery({
-            queryKey: ['products'],
-            queryFn: async () =>
-            (
-                await apiClient.get<Product[]>(`api/products`)
-            ).data,
-        })
-        ```
+       ```js
+       export const useGetProductsQuery = () =>
+       useQuery({
+           queryKey: ['products'],
+           queryFn: async () =>
+           (
+               await apiClient.get<Product[]>(`api/products`)
+           ).data,
+       })
+       ```
 
     5. HomePage.tsx
 
-        ```js
-        const { data: products, isLoading, error } = useGetProductsQuery()
-        ...
-            {isLoading ? (
-                <LoadingBox />
-            ) : error ? (
-                <MessageBox variant="danger">{getError(error as ApiError)}</MessageBox>
-            ) : (
-            <Row>
-            <Helmet>
-                <title>TS Amazona</title>
-            </Helmet>
-            {products.map((product) => (
-                <Col key={product.slug} sm={6} md={4} lg={3}>
-                <ProductItem product={product} />
-                </Col>
-            ))}
-            </Row>
-            )}
+       ```js
+       const { data: products, isLoading, error } = useGetProductsQuery()
+       ...
+           {isLoading ? (
+               <LoadingBox />
+           ) : error ? (
+               <MessageBox variant="danger">{getError(error as ApiError)}</MessageBox>
+           ) : (
+           <Row>
+           <Helmet>
+               <title>TS Amazona</title>
+           </Helmet>
+           {products.map((product) => (
+               <Col key={product.slug} sm={6} md={4} lg={3}>
+               <ProductItem product={product} />
+               </Col>
+           ))}
+           </Row>
+           )}
 
+       ```
+13. Create-Product-Page
+
+    1. index.ts
+
+        ```js
+        app.get('/api/products/:slug', (req: Request, res: Response) => {
+            res.json(sampleProducts.find((x) => x.slug === req.params.slug))
+        })
         ```
+
+    2. productHooks.ts
+
+        ```js
+        export const useGetProductDetailsBySlugQuery = (slug: string) =>
+            useQuery({
+            queryKey: ['products', slug],
+            queryFn: async () =>
+                ((await apiClient.get) < Product > `api/products/slug/${slug}`).data,
+            })
+        ```
+
+    3. ProductPage.tsx
+
+        ```js
+
+            function ProductPage() {
+                const params = useParams()
+                const { slug } = params
+
+                const {
+                data: product,
+                refetch,
+                isLoading,
+                error,
+                } = useGetProductDetailsBySlugQuery(slug!)
+                return isLoading ? (
+          <LoadingBox />
+        ) : error   ? (
+          <MessageBox variant="danger">{getError(error as ApiError)}</MessageBox>
+        ) : !product ? (
+          <MessageBox variant="danger">Product Not Found</MessageBox>
+        ): (
+          <div>
+            <Row>
+              <Col md={6}>
+                <img
+                  className="large"
+                  src={product.image}
+                  alt={product.name}
+                ></img>
+              </Col>
+              <Col md={3}>
+                <ListGroup variant="flush">
+                  <ListGroup.Item>
+                    <Helmet>
+                      <title>{product.name}</title>
+                    </Helmet>
+                    <h1>{product.name}</h1>
+                  </ListGroup.Item>
+                  <ListGroup.Item>
+                    <Rating
+                      rating={product.rating}
+                      numReviews={product.numReviews}
+                    ></Rating>
+                  </ListGroup.Item>
+                  <ListGroup.Item>Pirce : ${product.price}</ListGroup.Item>
+                  <ListGroup.Item>
+                    Description:
+                    <p>{product.description}</p>
+                  </ListGroup.Item>
+                </ListGroup>
+              </Col>
+              <Col md={3}>
+                <Card>
+                  <Card.Body>
+                    <ListGroup variant="flush">
+                      <ListGroup.Item>
+                        <Row>
+                          <Col>Price:</Col>
+                          <Col>${product.price}</Col>
+                        </Row>
+                      </ListGroup.Item>
+                      <ListGroup.Item>
+                        <Row>
+                          <Col>Status:</Col>
+                          <Col>
+                            {product.countInStock > 0 ? (
+                              <Badge bg="success">In Stock</Badge>
+                            ) : (
+                              <Badge bg="danger">Unavailable</Badge>
+                            )}
+                          </Col>
+                        </Row>
+                      </ListGroup.Item>
+
+                      {product.countInStock > 0 && (
+                        <ListGroup.Item>
+                          <div className="d-grid">
+                            <Button variant="primary">
+                              Add to Cart
+                            </Button>
+                          </div>
+                        </ListGroup.Item>
+                      )}
+                    </ListGroup>
+                  </Card.Body>
+                </Card>
+              </Col>
+            </Row>
+          </div>
+        
+        )
+      }
+      export default ProductPage
+
+   ```
