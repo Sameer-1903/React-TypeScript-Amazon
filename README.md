@@ -476,198 +476,307 @@
            )}
 
        ```
+
 13. Create-Product-Page
 
     1. index.ts
 
-        ```js
-        app.get('/api/products/:slug', (req: Request, res: Response) => {
-            res.json(sampleProducts.find((x) => x.slug === req.params.slug))
-        })
-        ```
+       ```js
+       app.get('/api/products/:slug', (req: Request, res: Response) => {
+         res.json(sampleProducts.find((x) => x.slug === req.params.slug))
+       })
+       ```
 
     2. productHooks.ts
 
-        ```js
-        export const useGetProductDetailsBySlugQuery = (slug: string) =>
-            useQuery({
-            queryKey: ['products', slug],
-            queryFn: async () =>
-                ((await apiClient.get) < Product > `api/products/slug/${slug}`).data,
-            })
-        ```
+       ```js
+       export const useGetProductDetailsBySlugQuery = (slug: string) =>
+         useQuery({
+           queryKey: ['products', slug],
+           queryFn: async () =>
+             ((await apiClient.get) < Product > `api/products/slug/${slug}`)
+               .data,
+         })
+       ```
 
     3. ProductPage.tsx
 
-        ```js
+       ```js
 
-            function ProductPage() {
-                const params = useParams()
-                const { slug } = params
+           function ProductPage() {
+               const params = useParams()
+               const { slug } = params
 
-                const {
-                data: product,
-                refetch,
-                isLoading,
-                error,
-                } = useGetProductDetailsBySlugQuery(slug!)
-                return isLoading ? (
-          <LoadingBox />
-        ) : error   ? (
-          <MessageBox variant="danger">{getError(error as ApiError)}</MessageBox>
-        ) : !product ? (
-          <MessageBox variant="danger">Product Not Found</MessageBox>
-        ): (
-          <div>
-            <Row>
-              <Col md={6}>
-                <img
-                  className="large"
-                  src={product.image}
-                  alt={product.name}
-                ></img>
-              </Col>
-              <Col md={3}>
-                <ListGroup variant="flush">
-                  <ListGroup.Item>
-                    <Helmet>
-                      <title>{product.name}</title>
-                    </Helmet>
-                    <h1>{product.name}</h1>
-                  </ListGroup.Item>
-                  <ListGroup.Item>
-                    <Rating
-                      rating={product.rating}
-                      numReviews={product.numReviews}
-                    ></Rating>
-                  </ListGroup.Item>
-                  <ListGroup.Item>Pirce : ${product.price}</ListGroup.Item>
-                  <ListGroup.Item>
-                    Description:
-                    <p>{product.description}</p>
-                  </ListGroup.Item>
-                </ListGroup>
-              </Col>
-              <Col md={3}>
-                <Card>
-                  <Card.Body>
-                    <ListGroup variant="flush">
-                      <ListGroup.Item>
-                        <Row>
-                          <Col>Price:</Col>
-                          <Col>${product.price}</Col>
-                        </Row>
-                      </ListGroup.Item>
-                      <ListGroup.Item>
-                        <Row>
-                          <Col>Status:</Col>
-                          <Col>
-                            {product.countInStock > 0 ? (
-                              <Badge bg="success">In Stock</Badge>
-                            ) : (
-                              <Badge bg="danger">Unavailable</Badge>
-                            )}
-                          </Col>
-                        </Row>
-                      </ListGroup.Item>
+               const {
+               data: product,
+               refetch,
+               isLoading,
+               error,
+               } = useGetProductDetailsBySlugQuery(slug!)
+               return isLoading ? (
+         <LoadingBox />
+       ) : error   ? (
+         <MessageBox variant="danger">{getError(error as ApiError)}</MessageBox>
+       ) : !product ? (
+         <MessageBox variant="danger">Product Not Found</MessageBox>
+       ): (
+         <div>
+           <Row>
+             <Col md={6}>
+               <img
+                 className="large"
+                 src={product.image}
+                 alt={product.name}
+               ></img>
+             </Col>
+             <Col md={3}>
+               <ListGroup variant="flush">
+                 <ListGroup.Item>
+                   <Helmet>
+                     <title>{product.name}</title>
+                   </Helmet>
+                   <h1>{product.name}</h1>
+                 </ListGroup.Item>
+                 <ListGroup.Item>
+                   <Rating
+                     rating={product.rating}
+                     numReviews={product.numReviews}
+                   ></Rating>
+                 </ListGroup.Item>
+                 <ListGroup.Item>Pirce : ${product.price}</ListGroup.Item>
+                 <ListGroup.Item>
+                   Description:
+                   <p>{product.description}</p>
+                 </ListGroup.Item>
+               </ListGroup>
+             </Col>
+             <Col md={3}>
+               <Card>
+                 <Card.Body>
+                   <ListGroup variant="flush">
+                     <ListGroup.Item>
+                       <Row>
+                         <Col>Price:</Col>
+                         <Col>${product.price}</Col>
+                       </Row>
+                     </ListGroup.Item>
+                     <ListGroup.Item>
+                       <Row>
+                         <Col>Status:</Col>
+                         <Col>
+                           {product.countInStock > 0 ? (
+                             <Badge bg="success">In Stock</Badge>
+                           ) : (
+                             <Badge bg="danger">Unavailable</Badge>
+                           )}
+                         </Col>
+                       </Row>
+                     </ListGroup.Item>
 
-                      {product.countInStock > 0 && (
-                        <ListGroup.Item>
-                          <div className="d-grid">
-                            <Button variant="primary">
-                              Add to Cart
-                            </Button>
-                          </div>
-                        </ListGroup.Item>
-                      )}
-                    </ListGroup>
-                  </Card.Body>
-                </Card>
-              </Col>
-            </Row>
-          </div>
-        
-        )
-      }
-      export default ProductPage
+                     {product.countInStock > 0 && (
+                       <ListGroup.Item>
+                         <div className="d-grid">
+                           <Button variant="primary">
+                             Add to Cart
+                           </Button>
+                         </div>
+                       </ListGroup.Item>
+                     )}
+                   </ListGroup>
+                 </Card.Body>
+               </Card>
+             </Col>
+           </Row>
+         </div>
 
-   ```
+       )
+       }
+       export default ProductPage
+       ```
+
+````
 
 
 14. Create-React-Context
 
-    1. Store.ts
+ 1. Store.ts
 
-        ```js
-  
-          type AppState = {
-              mode: string
-            }
+     ```js
 
-            const initialState: AppState = {
-              mode: localStorage.getItem('mode')
-                ? localStorage.getItem('mode')!
-                : window.matchMedia &&
-                  window.matchMedia('(prefers-color-scheme: dark)').matches
-                ? 'dark'
-                : 'light',
+       type AppState = {
+           mode: string
+         }
 
-            }
-            type Action =  { type: 'SWITCH_MODE' }
+         const initialState: AppState = {
+           mode: localStorage.getItem('mode')
+             ? localStorage.getItem('mode')!
+             : window.matchMedia &&
+               window.matchMedia('(prefers-color-scheme: dark)').matches
+             ? 'dark'
+             : 'light',
+
+         }
+         type Action =  { type: 'SWITCH_MODE' }
 
 
-            function reducer(state: AppState, action: Action): AppState {
-              switch (action.type) {
-                case 'SWITCH_MODE':
-                  return { ...state, mode: state.mode === 'dark' ? 'light' : 'dark' }
+         function reducer(state: AppState, action: Action): AppState {
+           switch (action.type) {
+             case 'SWITCH_MODE':
+               return { ...state, mode: state.mode === 'dark' ? 'light' : 'dark' }
 
-                default:
-                  return state
-              }
-            }
+             default:
+               return state
+           }
+         }
 
-            const defaultDispatch: React.Dispatch<Action> = () => initialState
+         const defaultDispatch: React.Dispatch<Action> = () => initialState
 
-            const Store = React.createContext({
-              state: initialState,
-              dispatch: defaultDispatch,
-            })
-            function StoreProvider(props: React.PropsWithChildren<{}>) {
-              const [state, dispatch] = React.useReducer<React.Reducer<AppState, Action>>(
-                reducer,
-                initialState
-              )
-              return <Store.Provider value={{ state, dispatch }} {...props} />
-            }
+         const Store = React.createContext({
+           state: initialState,
+           dispatch: defaultDispatch,
+         })
+         function StoreProvider(props: React.PropsWithChildren<{}>) {
+           const [state, dispatch] = React.useReducer<React.Reducer<AppState, Action>>(
+             reducer,
+             initialState
+           )
+           return <Store.Provider value={{ state, dispatch }} {...props} />
+         }
 
-            export { Store, StoreProvider }
+         export { Store, StoreProvider }
 
-        ```
+     ```
 
-    2. main.ts
+ 2. main.ts
 
-        ```js
-        <StoreProvider>
-          <RouterProvider router={router} />
-          ...
-        </StoreProvider>
-        ```
+     ```js
+     <StoreProvider>
+       <RouterProvider router={router} />
+       ...
+     </StoreProvider>
+     ```
 
-    3. App.tsx
+ 3. App.tsx
 
-        ```js
-        useEffect(() => {
-          document.body.setAttribute('data-bs-theme', mode)
-        }, [mode])
-        const switchModeHandler = () => {
-          ctxDispatch({ type: 'SWITCH_MODE' })
-        }
-        ...
-        <Button variant={mode} onClick={switchModeHandler}>
-                        <i
-                          className={mode === 'light' ? 'fa fa-sun' : 'fa fa-moon'}
-                        ></i>
-                      </Button>
-        ```
+     ```js
+     useEffect(() => {
+       document.body.setAttribute('data-bs-theme', mode)
+     }, [mode])
+     const switchModeHandler = () => {
+       ctxDispatch({ type: 'SWITCH_MODE' })
+     }
+     ...
+     <Button variant={mode} onClick={switchModeHandler}>
+                     <i
+                       className={mode === 'light' ? 'fa fa-sun' : 'fa fa-moon'}
+                     ></i>
+                   </Button>
+     ```
 
-    4.  Use bootstrap 5.3 or above
+ 4.  Use bootstrap 5.3 or above
+
+
+15. Connect-To-MongoDB
+
+1. create mongodb database
+2. npm install dotenv mongoose @typegoose/typegoose
+3. put mongodb uri in .env
+4. MONGODB_URI=mongodb://localhost/tsmernamazon
+5. index.ts
+
+   ```js
+   dotenv.config()
+
+   const MONGODB_URI =
+     process.env.MONGODB_URI || 'mongodb://localhost/tsmernamazona'
+   mongoose.set('strictQuery', true)
+   mongoose
+     .connect(MONGODB_URI)
+     .then(() => {
+       console.log('connected to mongodb')
+     })
+     .catch(() => {
+       console.log('error mongodb')
+     })
+   ```
+
+6. models/productModel
+
+   ```js
+   import { modelOptions, prop, getModelForClass } from '@typegoose/typegoose'
+
+   @modelOptions({})
+
+   @modelOptions({ schemaOptions: { timestamps: true } })
+   export class Product {
+     public _id!: string
+     @prop({ required: true })
+     public name!: string
+     @prop({ required: true, unique: true })
+     public slug!: string
+     @prop({ required: true })
+     public image!: string
+     @prop()
+     public images!: string[]
+     @prop({ required: true })
+     public brand!: string
+     @prop({ required: true })
+     public category!: string
+     @prop({ required: true })
+     public description!: string
+     @prop({ required: true, default: 0 })
+     public price!: number
+     @prop({ required: true, default: 0 })
+     public countInStock!: number
+     @prop({ required: true, default: 0 })
+     public rating!: number
+     @prop({ required: true, default: 0 })
+     public numReviews!: number
+     @prop({ required: true, default: false })
+     public isFeatured!: boolean
+     @prop()
+     public banner?: string
+   }
+
+   export const ProductModel = getModelForClass(Product)
+
+   ```
+
+7. npm i express-async-handler
+8. productRouter.ts
+
+   ```js
+   export const productRouter = express.Router()
+
+   productRouter.get(
+     '/',
+     asyncHandler(async (req, res) => {
+       const products = await ProductModel.find()
+       res.json(products)
+     })
+   )
+   ```
+
+9. index.ts
+
+ ```js
+ app.use('/api/products', productRouter)
+ ```
+
+10. run <http://localhost:4000/api/products>
+11. seedRouter.ts
+
+     ```js
+     const seedRouter = express.Router()
+
+     seedRouter.get(
+       '/',
+       asyncHandler(async (req: Request, res: Response) => {
+         await ProductModel.deleteMany({})
+         const createdProducts = await ProductModel.insertMany(products)
+         res.send({ createdProducts })
+       })
+     )
+     export default seedRouter
+     ```
+````
