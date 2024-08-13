@@ -4,8 +4,10 @@ import { Link, Outlet } from 'react-router-dom'
 import { Store } from './Store'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
-import {LinkContainer} from 'react-router-bootstrap'
- 
+import { LinkContainer } from 'react-router-bootstrap'
+import '@fortawesome/fontawesome-free/css/all.min.css';
+
+
 
 function App() {
 
@@ -24,9 +26,9 @@ function App() {
       <ToastContainer position='bottom-center' limit={1} />
       <header>
         <Navbar expand="lg">
-        <Container>
+          <Container>
             <LinkContainer to="/">
-              <Navbar.Brand>tsamazona</Navbar.Brand>
+              <Navbar.Brand>tsamazon</Navbar.Brand>
             </LinkContainer>
           </Container>
           <Nav>

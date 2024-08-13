@@ -22,7 +22,7 @@ const ProductPage = () => {
     const existItem = cart.cartItems.find((x) => x._id === product!._id)
     const quantity = existItem ? existItem.quantity + 1 : 1
     if (product!.countInStock < quantity) {
-      // toast.warn('Sorry. Product is out of stock')
+      toast.warn('Sorry. Product is out of stock')
       return
     }
     dispatch({
@@ -74,10 +74,9 @@ const ProductPage = () => {
                 numReviews={product.numReviews}
               ></Rating>
             </ListGroup.Item>
-            <ListGroup.Item>Pirce : ${product.price}</ListGroup.Item>
+            <ListGroup.Item>Pirce : ₹{product.price}</ListGroup.Item>
             <ListGroup.Item>
-              Description:
-              <p>{product.description}</p>
+              Description: {product.description}
             </ListGroup.Item>
           </ListGroup>
         </Col>
@@ -88,7 +87,7 @@ const ProductPage = () => {
                 <ListGroup.Item>
                   <Row>
                     <Col>Price:</Col>
-                    <Col>${product.price}</Col>
+                    <Col>₹{product.price}</Col>
                   </Row>
                 </ListGroup.Item>
                 <ListGroup.Item>

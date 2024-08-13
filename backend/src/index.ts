@@ -8,7 +8,7 @@ import seedRouter from './routers/seedRouter'
 dotenv.config()
 
       const MONGODB_URI =
-        process.env.MONGODB_URI || 'mongodb://localhost/tsmernamazondb'
+      process.env.MONGODB_URI || 'mongodb://localhost/tsmernamazondb'
       mongoose.set('strictQuery', true)
       mongoose
         .connect(MONGODB_URI)
