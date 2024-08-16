@@ -1,0 +1,13 @@
+{
+  "name": "react-typescript-amazon",
+  "version": "1.0.0",
+  "description": "1.  Introduction\r 2.  Install Tools\r 3.  Create TypeScript React App By Vite\r 4.  Create Git Repository\r     1. add README.md\r     2. create github account\r     3. connect vs code to github\r     4. publish repository\r 5.  List Products\r     1. create Product type\r     2. create products array\r     3. add product images\r     4. render products\r 6.  Add Bootstarp\r 7.  Add Page Routing\r     1. npm i react-router-dom\r     2. Create route for home page\r     3. Create router for product page\r     4. Add helmet for setting page title\r 8.  Create Node Server",
+  "main": "index.js",
+  "scripts": {
+    "build": "cd backend && npm install && npm run build && cd ../frontend && npm install && npm run build",
+    "start": "TG_ALLOW_MIXED=ALLOW node backend/build/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
