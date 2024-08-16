@@ -5,20 +5,20 @@ import LoadingBox from '../components/LoadingBox'
 import MessageBox from '../components/MessageBox'
 import ProductItem from '../components/ProductItem'
 import { Helmet } from 'react-helmet-async'
-import { useGetProductsQuery } from '../hooks/ProductHooks'
+import { useGetProductsQuery } from '../hooks/productHooks'
 
 
 
 
 const HomePage = () => {
 
-            
+
     const { data: products, isLoading, error } = useGetProductsQuery()
     return isLoading ? (
-            <LoadingBox/>
-        ) : error ? (
-            <MessageBox variant="danger">{getError(error as unknown as ApiError)}</MessageBox>
-        ):(
+        <LoadingBox />
+    ) : error ? (
+        <MessageBox variant="danger">{getError(error as unknown as ApiError)}</MessageBox>
+    ) : (
         <Row>
             <Helmet>
                 <title>TS Amazon</title>

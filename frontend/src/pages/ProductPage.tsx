@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
 import { Helmet } from 'react-helmet-async'
 import { Navigate, useNavigate, useParams } from 'react-router-dom'
-import { useGetProductDetailsBySlugQuery } from '../hooks/ProductHooks'
+import { useGetProductDetailsBySlugQuery } from '../hooks/productHooks'
 import LoadingBox from '../components/LoadingBox'
 import MessageBox from '../components/MessageBox'
 import { getError, convertProductToCartItem } from '../utils';
